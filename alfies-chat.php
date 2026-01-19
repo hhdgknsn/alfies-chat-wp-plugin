@@ -4,13 +4,18 @@
  * Version: 1.0.0
  */
 
+require_once __DIR__ . '/vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
 class Alfies_Claude_API {
     
     private $api_key;
     private $api_url = 'https://api.anthropic.com/v1/messages';
     
     public function __construct() {
-        $this->api_key = defined('ANTHROPIC_API_KEY') ? ANTHROPIC_API_KEY : '';
+        $this->api_key = $_ENV['ANTHROPIC_API_KEY'] ?? '';
     }
     
     public function send_message($user_message, $conversation_history = []) {
