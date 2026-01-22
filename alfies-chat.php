@@ -10,9 +10,9 @@
 if (!defined('ABSPATH')) exit;
 
 // Load required files
-require_once plugin_dir_path(__FILE__) . 'api-handler.php';
-require_once plugin_dir_path(__FILE__) . 'chat-handler.php';
-require_once plugin_dir_path(__FILE__) . 'chat-widget.php';
+require_once plugin_dir_path(__FILE__) . 'includes/api-handler.php';
+require_once plugin_dir_path(__FILE__) . 'includes/chat-handler.php';
+require_once plugin_dir_path(__FILE__) . 'includes/chat-widget.php';
 
 class Alfies_Chat_Plugin {
     

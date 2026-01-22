@@ -1,5 +1,5 @@
 <?php
-class Alfies_Claude_API {
+class Api_Handler {
     
     private $api_key;
     private $api_url = 'https://api.anthropic.com/v1/messages';
