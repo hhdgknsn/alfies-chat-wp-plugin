@@ -9,10 +9,14 @@
 // Security check
 if (!defined('ABSPATH')) exit;
 
+// Load Dotenv
+require_once plugin_dir_path(__FILE__) . 'vendor/autoload.php';
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
 // Load required files
 require_once plugin_dir_path(__FILE__) . 'includes/api-handler.php';
 require_once plugin_dir_path(__FILE__) . 'includes/chat-handler.php';
-require_once plugin_dir_path(__FILE__) . 'includes/chat-widget.php';
 
 class Alfies_Chat_Plugin {
     
@@ -34,22 +38,26 @@ class Alfies_Chat_Plugin {
         
         // Enqueue JS
         wp_enqueue_script(
-            'alfies-chat-toggle',
-            plugin_dir_url(__FILE__) . 'assets/js/chat-toggle.js',
+            'chat',
+            plugin_dir_url(__FILE__) . 'assets/js/chat.js',
             ['jquery'],
             '1.0',
             true
         );
         
         // Localize script with AJAX URL and nonce
-        wp_localize_script('alfies-chat-toggle', 'alfiesChat', [
+        wp_localize_script('chat', 'chat', [
             'ajaxurl' => admin_url('admin-ajax.php'),
-            'nonce' => wp_create_nonce('alfies_chat_nonce')
+            'nonce' => wp_create_nonce('chat_nonce')
         ]);
     }
     
     // Register Elementor widget
     public function register_widget($widgets_manager) {
+        if (!did_action('elementor/loaded')) {
+            return;
+        }
+        require_once plugin_dir_path(__FILE__) . 'includes/chat-widget.php';
         $widgets_manager->register(new Alfies_Chat_Widget());
     }
 }
