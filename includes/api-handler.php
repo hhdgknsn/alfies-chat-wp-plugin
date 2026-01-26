@@ -9,7 +9,7 @@ class Api_Handler {
     }
     
     public function send_message($user_message, $conversation_history = []) {
-        
+
         $messages = $conversation_history;
         $messages[] = [
             'role' => 'user',
@@ -38,6 +38,12 @@ class Api_Handler {
         }
         
         $body = json_decode(wp_remote_retrieve_body($response), true);
+
+        if (!isset($body['content'][0]['text'])) {
+            $error_msg = $body['error']['message'] ?? json_encode($body);
+            error_log('CHAT API ERROR: ' . $error_msg);
+            return ['error' => $error_msg];
+        }
         
         if (isset($body['content'][0]['text'])) {
             return [
