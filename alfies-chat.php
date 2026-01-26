@@ -28,14 +28,6 @@ class Alfies_Chat_Plugin {
     
     // Enqueue CSS and JS files
     public function enqueue_scripts() {
-        // Enqueue CSS
-        wp_enqueue_style(
-            'alfies-chat-widget',
-            plugin_dir_url(__FILE__) . 'assets/css/chat-widget.css',
-            [],
-            '1.0'
-        );
-        
         // Enqueue JS
         wp_enqueue_script(
             'chat',
