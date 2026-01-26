@@ -1,3 +1,5 @@
+console.log('CHAT JS LOADED - VERSION 2');
+
 document.addEventListener('DOMContentLoaded', function() {
     const toggle = document.getElementById('chat-toggle');
     const widget = document.getElementById('chat-widget');
@@ -5,6 +7,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const sendBtn = document.getElementById('chat-send');
     const input = document.getElementById('chat-input');
     const messagesContainer = document.getElementById('chat-messages');
+
+    if (typeof marked === 'undefined') {
+        console.error('Marked.js not loaded!');
+    }
     
     let conversationHistory = [];
     
@@ -59,7 +65,18 @@ document.addEventListener('DOMContentLoaded', function() {
     function addMessage(text, sender) {
         const messageDiv = document.createElement('div');
         messageDiv.className = `chat-message chat-message-${sender}`;
-        messageDiv.textContent = text;
+        
+        if (sender === 'assistant') {
+            let html = text
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                .replace(/\n/g, '<br>');
+            
+            messageDiv.innerHTML = html;
+        } else {
+            messageDiv.textContent = text;
+        }
+        
         messagesContainer.appendChild(messageDiv);
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
     }

@@ -35,12 +35,13 @@ class Alfies_Chat_Plugin {
             [],
             '1.0'
         );
+
         // Enqueue JS
         wp_enqueue_script(
             'chat',
             plugin_dir_url(__FILE__) . 'assets/js/chat.js',
             ['jquery'],
-            '1.0',
+            '2.0',  // Change this version number
             true
         );
         
